@@ -2,49 +2,63 @@
 
 namespace Finance.Helper
 {
-    public class IncomeManager
+
+    public class IncomeManager : Manager<Income>
     {
         private readonly IncomeStorage _storage;
-        private readonly List<Income> _incomes;
 
-        public IncomeManager(IncomeStorage storage)
+        public IncomeManager()
         {
-            _storage = storage;
-            _incomes = _storage.LoadIncome();
+            _storage = new IncomeStorage();
+            Items = _storage.Load();
         }
 
-        public string AddIncome(Income income)
+        public override void Add(Income income)
         {
-            income.Id = _incomes.Count + 1;
-            _incomes.Add(income);
-            _storage.SaveIncome(_incomes);
-            return "Income added successfully.";
+            income.Id = Items.Count + 1;
+            Items.Add(income);
+            _storage.Save(Items);
+            Console.WriteLine("Income added successfully.");
         }
 
-        public string UpdateIncome(int id, decimal newAmount, string newDescription)
+        public override void Update(int id, Income updatedIncome)
         {
-            var income = _incomes.FirstOrDefault(i => i.Id == id);
-            if (income == null) return "Income not found.";
-
-            income.Amount = newAmount;
-            income.Description = newDescription;
-            _storage.SaveIncome(_incomes);
-            return "Income updated successfully.";
+            var income = Items.FirstOrDefault(i => i.Id == id);
+            if (income != null)
+            {
+                income.Amount = updatedIncome.Amount;
+                income.Description = updatedIncome.Description;
+                _storage.Save(Items);
+                Console.WriteLine("Income updated successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Income not found.");
+            }
         }
 
-        public string DeleteIncome(int id)
+        public override void Delete(int id)
         {
-            var income = _incomes.FirstOrDefault(i => i.Id == id);
-            if (income == null) return "Income not found.";
-
-            _incomes.Remove(income);
-            _storage.SaveIncome(_incomes);
-            return "Income deleted successfully.";
+            var income = Items.FirstOrDefault(i => i.Id == id);
+            if (income != null)
+            {
+                Items.Remove(income);
+                _storage.Save(Items);
+                Console.WriteLine("Income deleted successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Income not found.");
+            }
         }
 
-        public List<Income> GetAllIncomes()
+        public override void Display()
         {
-            return _incomes;
+            foreach (var income in Items)
+            {
+                Console.WriteLine($"ID: {income.Id}, Amount: {income.Amount}, Description: {income.Description}, Date: {income.Date}");
+            }
         }
     }
+
 }

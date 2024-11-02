@@ -1,15 +1,17 @@
 ﻿using Finance.Helper;
+using Finance.Models;
 
 namespace Finance
 {
     class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
-            var incomestorage = new IncomeStorage();
-            var incomeManager = new IncomeManager(incomestorage);
-            var menubarManager = new MenuBarManager(incomeManager);
-            menubarManager.DisplayMenu();
+            var expenseManager = new ExpenseManager();
+            var incomeManager = new IncomeManager();
+            var menuManager = new MenuManager(incomeManager, expenseManager);
+            menuManager.DisplayMenu();
         }
     }
+
 }
