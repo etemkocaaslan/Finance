@@ -3,7 +3,6 @@
     public abstract class AbstractMenuManager
     {
         private protected static bool exit = false;
-        protected abstract void DisplayMenu();
         protected static void DisplayMenuOptions() => Console.WriteLine(
               "|| Finance Manager ||"
             + "\n1. Manage Income"

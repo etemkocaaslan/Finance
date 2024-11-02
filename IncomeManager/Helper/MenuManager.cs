@@ -4,7 +4,7 @@ namespace Finance.Helper
 {
     public class MenuManager(IncomeManager incomeManager, ExpenseManager expenseManager) : AbstractMenuManager
     {
-        protected override void DisplayMenu()
+        public void DisplayMenu()
         {
             while (!exit)
             {
