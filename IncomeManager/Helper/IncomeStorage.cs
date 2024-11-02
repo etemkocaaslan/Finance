@@ -7,15 +7,7 @@ namespace Finance.Helper
     {
         public IncomeStorage() : base("incomeData.json") { }
 
-        public override List<Income> Load()
-        {
-            if (File.Exists(FilePath))
-            {
-                var jsonData = File.ReadAllText(FilePath);
-                return JsonSerializer.Deserialize<List<Income>>(jsonData) ?? new List<Income>();
-            }
-            return new List<Income>();
-        }
+        public override List<Income> Load() => (File.Exists(FilePath)) ? JsonSerializer.Deserialize<List<Income>>(File.ReadAllText(FilePath)) ?? [] : [];
 
         public override void Save(List<Income> incomes)
         {
