@@ -1,5 +1,4 @@
 ﻿using Finance.Models;
-
 namespace Finance.Helper
 {
     public class MenuManager(IncomeManager incomeManager, ExpenseManager expenseManager) : AbstractMenuManager
@@ -12,7 +11,7 @@ namespace Finance.Helper
 
                 if (int.TryParse(Console.ReadLine(), out int choice))
                 {
-                    Console.Clear();
+                    // System.Console.Clear();
                     exit = HandleMenuChoice(choice);
                 }
                 else
@@ -57,7 +56,7 @@ namespace Finance.Helper
                 if (int.TryParse(Console.ReadLine(), out int choice))
                 {
                     back = HandleIncomeChoice(choice);
-                    Console.Clear();
+                    // Console.Clear();
                 }
                 else
                 {
@@ -82,7 +81,7 @@ namespace Finance.Helper
                 if (int.TryParse(Console.ReadLine(), out int choice))
                 {
                     back = HandleExpenseChoice(choice);
-                    Console.Clear();
+                    // Console.Clear();
                 }
                 else
                 {
@@ -139,72 +138,56 @@ namespace Finance.Helper
             }
         }
 
-        private void AddIncome()
-        {
-            var income = new Income
+        #region Styles
+        // private void AddIncome() => incomeManager.Add(new Income() { Amount = GetAmount(),
+        //                                                              Description = GetDescription(),
+        //                                                              Date = DateTime.Now });
+
+        // private void AddIncome() => incomeManager.Add(
+        //     new Income() { Amount = GetAmount(),
+        //                    Description = GetDescription(),
+        //                    Date = DateTime.Now });
+        #endregion
+        private void AddIncome() => incomeManager.Add(
+            new Income()
             {
                 Amount = GetAmount(),
                 Description = GetDescription(),
                 Date = DateTime.Now
-            };
-            incomeManager.Add(income);
-        }
+            });
 
-        private void UpdateIncome()
-        {
-            int id = GetId("income");
-            var income = new Income
+        private void UpdateIncome() => incomeManager.Update(
+            GetId("income"),
+            new Income
             {
                 Amount = GetAmount(),
                 Description = GetDescription(),
                 Date = DateTime.Now
-            };
-            incomeManager.Update(id, income);
-        }
+            });
 
-        private void DeleteIncome()
-        {
-            int id = GetId("income");
-            incomeManager.Delete(id);
-        }
+        private void DeleteIncome() => incomeManager.Delete(GetId("income"));
 
-        private void DisplayIncomes()
-        {
-            incomeManager.Display();
-        }
+        private void DisplayIncomes() => incomeManager.Display();
 
-        private void AddExpense()
-        {
-            var expense = new Expense
+        private void AddExpense() => expenseManager.Add(
+            new Expense
             {
                 Amount = GetAmount(),
                 Description = GetDescription(),
                 Date = DateTime.Now
-            };
-            expenseManager.Add(expense);
-        }
+            });
 
-        private void UpdateExpense()
-        {
-            int id = GetId("expense");
-            var expense = new Expense
+        private void UpdateExpense() => expenseManager.Update(
+            GetId("expense"),
+            new Expense
             {
                 Amount = GetAmount(),
                 Description = GetDescription(),
                 Date = DateTime.Now
-            };
-            expenseManager.Update(id, expense);
-        }
+            });
 
-        private void DeleteExpense()
-        {
-            int id = GetId("expense");
-            expenseManager.Delete(id);
-        }
+        private void DeleteExpense() => expenseManager.Delete(GetId("expense"));
 
-        private void DisplayExpenses()
-        {
-            expenseManager.Display();
-        }
+        private void DisplayExpenses() => expenseManager.Display();
     }
 }
